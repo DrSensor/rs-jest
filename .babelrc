@@ -1,0 +1,16 @@
+{
+	"presets": [
+		["@babel/env", {
+			"targets": {"node": 8},
+			"modules": false
+		}]
+	],
+	"plugins": [
+		"@babel/proposal-export-namespace-from"
+	],
+	"env": {
+		"test": {
+			"presets": ["@babel/env"]
+		}
+	}
+}
