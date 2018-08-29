@@ -1,14 +1,14 @@
 module.exports = {
-	projects: [
-		{
-			displayName: "test",
-			testEnvironment: "node",
-			setupTestFrameworkScriptFile: "./jest.setup.js"
-		},
-		{
-			displayName: "lint",
-			runner: "jest-runner-eslint",
-			testMatch: ["<rootDir>/src/**/*.js"]
+	testEnvironment: "node",
+	globals: {
+		"ts-jest": {
+			useBabelrc: true
 		}
-	]
+	},
+	transform: {
+		"^.+\\.tsx?$": "ts-jest"
+	},
+	testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+	moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+	setupTestFrameworkScriptFile: "./jest.setup.js"
 }

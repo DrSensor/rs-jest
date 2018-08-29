@@ -241,19 +241,20 @@ workflows:
       #     filters:
       #       tags:
       #         only: /.*/
-      - smoke-node-wasm:
-          requires:
-            - node8-latest
-          filters:
-            tags:
-              only: /.*/
+      # - smoke-node-wasm:
+      #     requires:
+      #       - node8-latest
+      #     filters:
+      #       tags:
+      #         only: /.*/
       #endregion
 
       #region RELEASE VERSION
       - draft:
           requires:
             # - smoke-stencil
-            - smoke-node-wasm
+            # - smoke-node-wasm
+            - node10-latest
           filters:
             tags:
               only: /^v\d+[.]\d+[.]\d+$/

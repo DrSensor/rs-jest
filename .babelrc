@@ -3,14 +3,11 @@
 		["@babel/env", {
 			"targets": {"node": 8},
 			"modules": false
-		}]
+		}], "@babel/typescript"
 	],
 	"plugins": [
-		"@babel/proposal-export-namespace-from"
-	],
-	"env": {
-		"test": {
-			"presets": ["@babel/env"]
-		}
-	}
+		"@babel/proposal-export-namespace-from",
+		"@babel/proposal-class-properties",
+		"@babel/proposal-object-rest-spread"
+	]
 }

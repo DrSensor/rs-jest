@@ -7,6 +7,7 @@ import resolve from "rollup-plugin-node-resolve"
 import autoExternal from "rollup-plugin-auto-external"
 import babel from "rollup-plugin-babel"
 import prettier from "rollup-plugin-prettier"
+import typescript from "rollup-plugin-typescript2"
 
 // #region helper
 let {overrides, ...options} = prc
@@ -16,11 +17,19 @@ const prettierrc = {
 }
 // #endregion
 
+const basePlugins = [
+	commonjs(),
+	resolve(),
+	babel(),
+	autoExternal(),
+	prettier(prettierrc.files("*.js"))
+]
+
 // Rollup Configuration
 export default [
 	{
 		input: {
-			index: "src/main.js",
+			index: "src/index.ts",
 			cargo: "node_modules/rust-native-wasm-loader/dist/cargo.js"
 		},
 		output: {
@@ -30,9 +39,10 @@ export default [
 		},
 		experimentalCodeSplitting: true,
 		plugins: [
+			typescript({useTsconfigDeclarationDir: true}),
+			commonjs(),
 			resolve(),
 			babel(),
-			commonjs(),
 			autoExternal(),
 			prettier(prettierrc.files("*.js"))
 		]

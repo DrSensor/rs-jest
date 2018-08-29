@@ -10,6 +10,15 @@
 			}
 		},
 		{
+			"excludeFiles": "*.config.ts",
+			"files": "*.ts",
+			"options": {
+				"parser": "typescript",
+				"singleQuote": true,
+				"bracketSpacing": true
+			}
+		},
+		{
 			"files": ["*.json", ".*rc", ".*.json"],
 			"options": {
 				"parser": "json",

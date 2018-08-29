@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"target": "esnext",
+		"module": "esnext",
+		"lib": ["esnext", "dom"],
+		"strict": true,
+		"skipLibCheck": true,
+		"declaration": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"declarationDir": "dist",
+		"outDir": "dist",
+		"typeRoots": ["node_modules/@types"]
+	},
+	"include": ["src", "test"],
+	"exclude": ["node_modules"]
+}

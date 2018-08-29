@@ -3,27 +3,29 @@
 	"version": "0.0.0",
 	"description": "Jest preprocessor/transformer for Rust",
 	"main": "dist/index.js",
+	"typings": "dist/index.d.ts",
 	"scripts": {
 		"build": "rollup -c",
 		"dev": "rollup -c -w || true",
+		"lint": "(tsc --pretty -p . --noemit || true) && tslint -p . --force",
+		"lint:fix": "tslint -p . --fix --force",
 		"lint:commits": "commitlint --to=$(git rev-parse HEAD)",
 		"release": "standard-version --skip.commit --skip.tag",
 		"release:as": "standard-version --skip.commit --skip.tag --release-as",
 		"release:ok": "standard-version --sign --commit-all --skip.bump --skip.changelog",
 		"release:validate": "commitlint --from=$(git describe --tags --abbrev=0) --to=$(git rev-parse HEAD)",
+		"ci:lint": "tsc --pretty -p . --noemit && tslint -p .",
 		"ci:test": "jest --runInBand --silent --ci",
-		"ci:coverage": "jest --collectCoverageFrom='src/**/*.js' --coverage --runInBand --silent --ci",
+		"ci:coverage": "jest --collectCoverageFrom='src/**/*.ts' --coverage --runInBand --silent --ci",
 		"ci:release": "conventional-github-releaser -p angular",
 		"ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}",
 		"test": "jest",
 		"test:watch": "jest --watch || true",
-		"test:coverage": "jest --collectCoverageFrom='src/**/*.js' --coverage",
+		"test:coverage": "jest --collectCoverageFrom='src/**/*.ts' --coverage",
 		"prepublishOnly": "npm run build"
 	},
 	"lint-staged": {
-		"*.{js,ts}": [
-			"pretty-quick --staged"
-		]
+		"*.ts": ["tslint --project ."]
 	},
 	"standard-version": {
 		"scripts": {
@@ -35,11 +37,7 @@
 		"type": "git",
 		"url": "git+https://github.com/DrSensor/rs-jest.git"
 	},
-	"keywords": [
-		"jest",
-		"rust",
-		"webassembly"
-	],
+	"keywords": ["jest", "rust", "webassembly"],
 	"author": "Fahmi Akbar Wildana",
 	"license": "MIT",
 	"bugs": {
@@ -48,9 +46,15 @@
 	"homepage": "https://github.com/DrSensor/rs-jest#readme",
 	"devDependencies": {
 		"@babel/core": "^7.0.0-rc.3",
+		"@babel/plugin-proposal-class-properties": "^7.0.0",
+		"@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
 		"@babel/preset-env": "^7.0.0-rc.3",
+		"@babel/preset-typescript": "^7.0.0",
 		"@commitlint/cli": "^7.0.0",
 		"@commitlint/config-conventional": "^7.0.1",
+		"@types/jest": "^23.3.1",
+		"@types/node": "^10.9.3",
 		"babel-core": "^7.0.0-bridge.0",
 		"babel-jest": "^23.4.2",
 		"conventional-github-releaser": "^3.1.2",
@@ -62,11 +66,18 @@
 		"pretty-quick": "^1.6.0",
 		"rollup": "^0.65.0",
 		"rollup-plugin-auto-external": "^2.0.0",
-		"rollup-plugin-babel": "^3.0.7",
+		"rollup-plugin-babel": "^4.0.2",
 		"rollup-plugin-commonjs": "^9.1.6",
 		"rollup-plugin-node-resolve": "^3.3.0",
+		"rollup-plugin-prettier": "^0.4.0",
+		"rollup-plugin-typescript2": "^0.17.0",
 		"rust-native-wasm-loader": "^0.8.1",
-		"standard-version": "^4.4.0"
+		"standard-version": "^4.4.0",
+		"ts-jest": "^23.1.4",
+		"ts-node": "^7.0.1",
+		"tslint": "^5.11.0",
+		"tslint-config-prettier": "^1.15.0",
+		"typescript": "^3.0.1"
 	},
 	"dependencies": {
 		"rollup-pluginutils": "^2.3.1"
