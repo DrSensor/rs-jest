@@ -5,3 +5,5 @@ import {
 } from 'rust-native-wasm-loader/dist/cargo';
 
 console.log(cargoCommand, findSrcDir, handleCargo);
+
+export default cargoCommand;

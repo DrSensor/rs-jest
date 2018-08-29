@@ -1,4 +1,5 @@
 import {dirname} from "path"
+import {mv} from "shelljs"
 import pkg from "./package.json"
 import prc from "./.prettierrc.json"
 
@@ -17,14 +18,6 @@ const prettierrc = {
 }
 // #endregion
 
-const basePlugins = [
-	commonjs(),
-	resolve(),
-	babel(),
-	autoExternal(),
-	prettier(prettierrc.files("*.js"))
-]
-
 // Rollup Configuration
 export default [
 	{
@@ -39,7 +32,10 @@ export default [
 		},
 		experimentalCodeSplitting: true,
 		plugins: [
-			typescript({useTsconfigDeclarationDir: true}),
+			typescript({
+				useTsconfigDeclarationDir: true,
+				exclude: ["test/**"]
+			}),
 			commonjs(),
 			resolve(),
 			babel(),
