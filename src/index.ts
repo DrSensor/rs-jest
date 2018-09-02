@@ -1,9 +1,15 @@
-import {
-  cargoCommand,
-  findSrcDir,
-  handleCargo
-} from 'rust-native-wasm-loader/dist/cargo';
+import getCacheKey from './utils/get-cache-key';
+import preprocess from './preprocess';
 
-console.log(cargoCommand, findSrcDir, handleCargo);
+const createTransformer = (options?: any): jest.Transformer => {
+  // options are always empty, must be the older jest API giving options here
+  return {
+    canInstrument: true,
+    getCacheKey,
+    process: preprocess,
+    createTransformer: undefined as any
+  };
+};
 
-export default cargoCommand;
+module.exports = createTransformer();
+module.exports.createTransformer = createTransformer;

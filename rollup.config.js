@@ -34,7 +34,8 @@ export default [
 		plugins: [
 			typescript({
 				useTsconfigDeclarationDir: true,
-				exclude: ["test/**"]
+				exclude: ["test/**"],
+				tsconfigOverride: {compilerOptions: {module: "esnext"}}
 			}),
 			commonjs(),
 			resolve(),
