@@ -22,13 +22,14 @@
 		"ci:coverage": "jest --collectCoverageFrom='src/**/*.ts' --coverage --runInBand --silent --ci",
 		"ci:release": "conventional-github-releaser -p angular",
 		"ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}",
-		"test": "jest",
-		"test:watch": "jest --watch || true",
+		"pretest": "npm run build",
+		"test": "jest --notify",
+		"test:watch": "npm test -- --watch || true",
 		"test:coverage": "jest --collectCoverageFrom='src/**/*.ts' --coverage",
 		"prepublishOnly": "npm run build"
 	},
 	"lint-staged": {
-		"*.ts": ["tslint --project ."]
+		"*.ts": ["tslint -c tslint.json -p tsconfig.json"]
 	},
 	"standard-version": {
 		"scripts": {
@@ -63,7 +64,6 @@
 		"conventional-github-releaser": "^3.1.2",
 		"husky": "^1.0.0-rc.13",
 		"jest": "^23.5.0",
-		"jest-runner-eslint": "^0.6.0",
 		"lint-staged": "^7.2.2",
 		"prettier": "^1.14.2",
 		"pretty-quick": "^1.6.0",

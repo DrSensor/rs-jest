@@ -8,6 +8,10 @@ module.exports = {
 	transform: {
 		"^.+\\.tsx?$": "ts-jest"
 	},
+	testPathIgnorePatterns: [
+		"<rootDir>/test/fixtures",
+		"<rootDir>/node_modules/"
+	],
 	testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
 	moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
 	setupTestFrameworkScriptFile: "./jest.setup.js"
