@@ -43,6 +43,9 @@ unit_tests: &unit_tests
         name: NPM Rebuild
         command: npm install --quiet
     - run:
+        name: NPM Build
+        command: npm run build
+    - run:
         name: Run unit tests.
         command: npm run ci:test
 
@@ -110,6 +113,9 @@ jobs:
       - run:
           name: NPM Rebuild
           command: npm install --quiet
+      - run:
+          name: NPM Build
+          command: npm run build
       - run:
           name: Run unit tests.
           command: |
