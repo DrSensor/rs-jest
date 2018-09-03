@@ -23,7 +23,7 @@ export default [
 	{
 		input: {
 			index: "src/index.ts",
-			cargo: "node_modules/rust-native-wasm-loader/dist/cargo.js"
+			cargo: "src/cargo.ts"
 		},
 		output: {
 			dir: dirname(pkg.main),
@@ -33,7 +33,6 @@ export default [
 		experimentalCodeSplitting: true,
 		plugins: [
 			typescript({
-				useTsconfigDeclarationDir: true,
 				exclude: ["test/**"],
 				tsconfigOverride: {compilerOptions: {module: "esnext"}}
 			}),

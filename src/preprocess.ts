@@ -1,88 +1,87 @@
-import { flushLogs, logOnce } from './utils/logger';
-import {
-  cargoCommand,
-  findSrcDir,
-  handleCargo
-} from 'rust-native-wasm-loader/dist/cargo';
+import { readFileSync } from 'fs';
+import { cargoCommand, findSrcDir, handleCargo } from './cargo';
 
+import { flushLogs, logOnce, execPermissive } from './utils';
+import { defaultConfig, getConfigFrom } from './options';
+import wrap from './wrapper';
+
+//#region helper
+const is = (path: string) => ({ rustFile: /\.rs$/.test(path) });
+const polyfill = {
+  // TODO: convert to Jest context if JestAPI began to provide it
+  webpackLoader: {
+    emitWarning: (warning: string | Error) => console.warn(warning.toString()),
+    emitError: (error: string | Error) => console.error(error.toString()),
+    addDependency: (file: string) => (file ? undefined : undefined)
+  }
+};
+//#endregion
+
+/** Main function that do the transformation from Rust code to WebAssembly
+ * @param {unused} src the source code, I guess 🤔
+ * @param filePath fullpaht of the file that going to be transformed
+ * @param jestConfig jest configuration
+ * @param {unused} transformOptions.instrument a proxy for collectCoverage {@link https://github.com/kulshekhar/ts-jest/issues/201#issuecomment-300572902}
+ * @returns transformed code with sourcemap or just the code
+ *
+ * However, it's unfortunate that jest will not support Promises for asynchronous transformation 😭
+ * @see https://github.com/facebook/jest/issues/5556#issuecomment-365526603
+ */
 export default function preprocess(
   src: string,
   filePath: jest.Path,
   jestConfig: jest.ProjectConfig,
   transformOptions?: jest.TransformOptions
 ): jest.TransformedSource | string {
-  // transformOptions.instrument is a proxy for collectCoverage
-  // https://github.com/kulshekhar/ts-jest/issues/201#issuecomment-300572902
-  // const compilerOptions = getTSConfig(jestConfig);
+  const rsJestConfig = getConfigFrom(jestConfig);
+  logOnce("defined globals['rs-jest']: ", rsJestConfig);
 
-  // logOnce('final compilerOptions:', compilerOptions);
-  logOnce('final compilerOptions:', {
-    cargoCommand,
-    findSrcDir,
-    handleCargo
-  });
+  const options = Object.assign(defaultConfig, rsJestConfig) as RsJestConfig; // diff and merge with predefined config
+  logOnce("final globals['rs-jest']: ", options);
 
-  const isTsFile = /\.tsx?$/.test(filePath);
-  const isJsFile = /\.jsx?$/.test(filePath);
-  const isHtmlFile = /\.html$/.test(filePath);
+  const cmd = cargoCommand(options.target, options.release);
+  logOnce('cargoCommand: ', cmd);
 
-  // This is to support angular 2. See https://github.com/kulshekhar/ts-jest/pull/145
-  if (
-    isHtmlFile &&
-    jestConfig.globals &&
-    (jestConfig.globals as any).__TRANSFORM_HTML__
-  ) {
-    src = 'module.exports=' + JSON.stringify(src) + ';';
+  /** In `ts-jest` codebase, it says:
+   * ---
+   * We can potentially do this faster by using the language service.
+   * @see https://github.com/TypeStrong/ts-node/blob/ad6183a1b99df4f535903e7b51ce99571221c95b/src/index.ts#L307
+   * ---
+   * @todo I wonder if it can be applied here 🤔
+   */
+
+  if (!is(filePath).rustFile) throw new Error(`${filePath} is not Rust file`);
+  if (!options.target.includes('wasm')) {
+    throw new Error(`For now, this transformer only support wasm related target compile!
+      For more info see https://kripken.github.io/blog/binaryen/2018/04/18/rust-emscripten.html
+    `);
   }
 
-  // const processFile =
-  //   compilerOptions.allowJs === true ? isTsFile || isJsFile : isTsFile;
+  const cwd = findSrcDir(filePath);
+  if (!cwd) {
+    throw new Error('No Cargo.toml file found in any parent directory.');
+  }
 
-  // if (!processFile) {
-  //   return src;
-  // }
+  const result = execPermissive(cmd, cwd);
 
-  // const tsJestConfig = getTSJestConfig(jestConfig);
-  // logOnce('tsJestConfig: ', tsJestConfig);
+  const { wasmFile } = handleCargo(polyfill.webpackLoader, result);
+  if (!wasmFile) throw new Error('No wasm file produced as build output');
 
-  // We can potentially do this faster by using the language service.
-  // See https://github.com/TypeStrong/ts-node/blob/master/src/index.ts#L268
-  // if (
-  //   tsJestConfig.enableTsDiagnostics === true ||
-  //   (typeof tsJestConfig.enableTsDiagnostics === 'string' &&
-  //     new RegExp(tsJestConfig.enableTsDiagnostics).test(filePath))
-  // ) {
-  //   runTsDiagnostics(filePath, compilerOptions);
-  // }
-
-  // const transpileOutput = transpileTypescript(filePath, src, compilerOptions, tsJestConfig);
-
-  // FIXME: this should be done in the typescript source, else it's invalidating source maps
-  // if (tsJestConfig.ignoreCoverageForAllDecorators === true) {
-  //   transpileOutput.code = transpileOutput.code.replace(
-  //     /\b__decorate\b/g,
-  //     '/* istanbul ignore next */__decorate',
-  //   );
-  // }
-  // if (tsJestConfig.ignoreCoverageForDecorators === true) {
-  //   transpileOutput.code = transpileOutput.code.replace(
-  //     /(\b__decorate\(\[\r?\n[^\n\r]*)\/\*\s*istanbul\s+ignore\s+decorator(.*)\*\//g,
-  //     '/* istanbul ignore next$2*/$1',
-  //   );
-  // }
-
-  // const outputText = postProcessCode(
-  //   jestConfig,
-  //   transformOptions,
-  //   transpileOutput,
-  //   filePath,
-  // );
-
+  const wasmCode = readFileSync(wasmFile);
   flushLogs();
 
-  // return { code: outputText.code, map: outputText.map };
-
-  const wasmCode = Buffer.from([0x00, 0x61, 0x73, 0x6d, 0x01, 0, 0, 0]).toJSON()
-    .data;
-  return `module.exports = Buffer.from([${wasmCode.toString()}])`;
+  switch (options.export) {
+    case 'buffer':
+      return wrap(wasmCode).asBuffer;
+    case 'instance':
+      return wrap(wasmCode).asWebAssembly.Instance;
+    case 'module':
+      return wrap(wasmCode).asWebAssembly.Module;
+    case 'async':
+      return wrap(wasmCode).promiseWebAssembly.Both;
+    case 'async-instance':
+      return wrap(wasmCode).promiseWebAssembly.Instance;
+    case 'async-module':
+      return wrap(wasmCode).promiseWebAssembly.Module;
+  }
 }

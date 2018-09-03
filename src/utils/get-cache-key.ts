@@ -6,6 +6,7 @@ import { readFileSync } from 'fs';
  * And yes, it's difficult to deduce what parameter is stand for because
  * Jest not documenting on how to write Jest transformer/preprocessor.
  * Also, I don't even know what Jest context function I can use 😞
+ * Wondering if this function can be used for something usefull 🤔
  */
 export default function getCacheKey(
   fileData: string,
@@ -23,7 +24,7 @@ export default function getCacheKey(
     relative(rootDir, filePath),
     jestConfig,
     /// TODO: use and modify https://github.com/facebook/jest/blob/8e72341c6df9af92a5e95e4a5784923baf5245de/packages/babel-jest/src/index.js#L35-L79
-    /// just return JSON.stringify(toml2json(Cargo.toml))
+    /// or just return JSON.stringify(toml2json(Cargo.toml))❓ 🤔
     /* getBabelRC(filePath) */ '',
     instrument
   ]);

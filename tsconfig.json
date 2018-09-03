@@ -6,14 +6,12 @@
 		"lib": ["esnext", "dom"],
 		"strict": true,
 		"skipLibCheck": true,
-		"declaration": true,
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"declarationDir": "dist",
 		"outDir": "dist",
 		"typeRoots": ["node_modules/@types"]
 	},
-	"include": ["src", "test"],
+	"include": ["src", "test", "index.d.ts"],
 	"exclude": ["node_modules"]
 }

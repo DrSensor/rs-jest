@@ -4,6 +4,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { Constant } from './constants';
 
 /**
  * Logger file that enables logging things just once. Does this by traversing the array of previously recorded
@@ -40,7 +41,7 @@ export function flushLogs(): void {
   const rootPath = path.resolve(__dirname, '..', '..');
   const JSONifiedLogs = logs.map(convertToJSONIfPossible);
   const logString = JSONifiedLogs.join('\n');
-  const filePath = path.resolve(rootPath, 'debug.txt');
+  const filePath = path.resolve(rootPath, Constant.LOGFILE);
   if (outputToConsole) {
     // tslint:disable-next-line
     console.log(logString);

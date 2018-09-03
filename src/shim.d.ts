@@ -1,28 +1,36 @@
 // tslint:disable:no-namespace
 
 //#region polyfill
-declare module 'rust-native-wasm-loader/dist/cargo' {
-  export const cargoCommand: any;
-  export const findSrcDir: any;
-  export const handleCargo: any;
-}
-
-declare interface JestCacheKeyOptions {
-  rootDir: string;
-  instrument: boolean;
+namespace Webpack {
+  namespace Loader {
+    interface Context {
+      emitWarning(warning: Error);
+      emitError(error: Error);
+      addDependency(file: string);
+    }
+  }
 }
 //#endregion
 
-interface RsJestConfig {
+interface JestCacheKeyOptions {
+  rootDir: string;
+  instrument: boolean;
 }
 
-declare enum Config {
-  GLOBALS_KEY = 'rs-jest',
-  FILENAME = 'cargo.toml'
+interface RsJestConfig {
+  target: string; // use by rust-native-wasm-loader
+  release: boolean; // use by rust-native-wasm-loader
+  export:
+    | 'buffer'
+    | 'instance'
+    | 'module'
+    | 'async'
+    | 'async-instance'
+    | 'async-module';
 }
 
 declare namespace jest {
   interface ConfigGlobals {
-    'rs-jest': { [key: string]: string | number };
+    'rs-jest': Partial<RsJestConfig>;
   }
 }
