@@ -3,11 +3,11 @@
 	"version": "0.0.0",
 	"description": "Jest preprocessor/transformer for Rust",
 	"main": "dist/index.js",
-	"typings": "dist/index.d.ts",
+	"typings": "index.d.ts",
+	"files": ["dist/", "index.d.ts"],
 	"scripts": {
 		"prebuild": "shx rm -r dist || true",
 		"build": "rollup -c",
-		"postbuild": "shx mv dist/**/*.d.ts dist && shx rm -r dist/*/",
 		"prestart": "npm run prebuild",
 		"start": "rollup -c -w || true",
 		"lint": "(tsc --pretty -p . --noemit || true) && tslint -p . --force",
@@ -74,7 +74,6 @@
 		"rollup-plugin-node-resolve": "^3.3.0",
 		"rollup-plugin-prettier": "^0.4.0",
 		"rollup-plugin-typescript2": "^0.17.0",
-		"rust-native-wasm-loader": "^0.8.1",
 		"shx": "^0.3.2",
 		"standard-version": "^4.4.0",
 		"ts-jest": "^23.1.4",
@@ -82,8 +81,5 @@
 		"tslint": "^5.11.0",
 		"tslint-config-prettier": "^1.15.0",
 		"typescript": "^3.0.1"
-	},
-	"dependencies": {
-		"rollup-pluginutils": "^2.3.1"
 	}
 }
