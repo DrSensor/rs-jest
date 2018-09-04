@@ -1,3 +1,5 @@
+const {rsJestScriptPath} = require("../utils")
+
 module.exports = {
 	testEnvironment: "node",
 	globals: {
@@ -6,6 +8,6 @@ module.exports = {
 		}
 	},
 	transform: {
-		"^.+\\.rs$": "<rootDir>../../../dist/index.js"
+		"^.+\\.rs$": rsJestScriptPath
 	}
 }
