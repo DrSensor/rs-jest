@@ -240,4 +240,8 @@ declare module 'jest' {
     run,
     runCLI
   };
+
+  global {
+    namespace jestCLI { type Options = Partial<Argv>; }
+  }
 }

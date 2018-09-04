@@ -1,11 +1,11 @@
 [package]
-name = "adder"
-version = "0.1.0"
+name = "empty_code"
+version = "0.0.0"
 authors = ["Fahmi Akbar Wildana <fahmi.a.w@gmail.com>"]
 
 [lib]
 crate-type = ["cdylib"]
-path = "lib.rs"
+path = 'lib.rs'
 
 [profile.release]
 lto = true
