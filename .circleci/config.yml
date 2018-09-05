@@ -32,7 +32,7 @@ smoke_tests: &smoke_tests
         name: Run smoke tests
         command: |
           cd examples/${GIT_SUBMODULE}
-          npm run build
+          npm test
 unit_tests: &unit_tests
   steps:
     - checkout
@@ -241,12 +241,12 @@ workflows:
       #endregion
 
       #region TEST BY EXAMPLES
-      # - smoke-stencil:
-      #     requires:
-      #       - node8-latest
-      #     filters:
-      #       tags:
-      #         only: /.*/
+      - smoke-stencil:
+          requires:
+            - node8-latest
+          filters:
+            tags:
+              only: /.*/
       # - smoke-node-wasm:
       #     requires:
       #       - node8-latest
@@ -258,7 +258,7 @@ workflows:
       #region RELEASE VERSION
       - draft:
           requires:
-            # - smoke-stencil
+            - smoke-stencil
             # - smoke-node-wasm
             - node10-latest
           filters:

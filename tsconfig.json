@@ -13,5 +13,5 @@
 		"typeRoots": ["node_modules/@types"]
 	},
 	"include": ["src", "test", "index.d.ts"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "examples"]
 }
