@@ -1,6 +1,6 @@
-# Workflow of rollup-plugin-rust
+# Workflow of rs-jest
 
-This is a documentation of workflow that rollup-plugin-rust use:
+This is a documentation of workflow that rs-jest use:
 
 - [Release Procedure](#release)
 
@@ -11,7 +11,7 @@ This project use tool called [`standard-version`][] to manage the release proces
 ```console
 $ npm run release
 
-> rollup-plugin-rust@0.0.0 release /home/wildan/Projects/OSS/rollup-plugin-rust
+> rs-jest@0.0.0 release /home/wildan/Projects/OSS/rs-jest
 > standard-version --skip.commit --skip.tag
 
 ✔ bumping version in package.json from 0.0.0 to 0.0.1
@@ -27,7 +27,7 @@ Review [CHANGELOG.md](./CHANGELOG.md) file and if it's ok then run this command 
 ```console
 $ npm run release:ok
 
-> rollup-plugin-rust@0.0.1 release:ok /home/wildan/Projects/OSS/rollup-plugin-rust
+> rs-jest@0.0.1 release:ok /home/wildan/Projects/OSS/rs-jest
 > standard-version --sign --commit-all --skip.bump --skip.changelog
 
 ✔ Running lifecycle script "precommit"
@@ -52,7 +52,7 @@ To specify the release type manually (like npm version <`major`|`minor`|`patch`>
 ```console
 $ npm run release:as -- minor
 
-> rollup-plugin-rust@0.0.0 release:as /home/wildan/Projects/OSS/rollup-plugin-rust
+> rs-jest@0.0.0 release:as /home/wildan/Projects/OSS/rs-jest
 > standard-version --skip.commit --skip.tag --release-as "minor"
 
 ✔ bumping version in package.json from 0.0.0 to 0.1.0

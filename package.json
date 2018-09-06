@@ -38,6 +38,9 @@
 			"precommit": "git add CHANGELOG.md package*.json"
 		}
 	},
+	"engines": {
+		"node": ">= 8.9.0"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/DrSensor/rs-jest.git"

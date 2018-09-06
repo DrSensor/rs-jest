@@ -7,7 +7,7 @@ Thanks for your interest to tinker this project. Let's make it great!! 🙂
 This project use rollup to bundle the final result while maintain the code format and it's comments block. Overall, the technology stack that this project uses are (you don't need to install this tools beforehand because it's already in dependecy list):
 
 - static-type checker: [typescript][]
-- code-style checker (linter): [eslint][] + [prettier][]
+- code-style checker (linter): [tslint][] + [prettier][]
 - bundler: [rollup][] + [babel][]
 - git hooks: [husky][] + [commitlint][] + [lint-staged][] + [standard-version][]
 - test framework: [jest][]
@@ -43,13 +43,7 @@ The smoke-tests is basically just an example how to use plugin in real simple pr
 ```console
 npm run build
 cd examples/stencil
-npm run build
-```
-
-and if you want to manually test the example, you can execute:
-
-```console
-npm start
+npm test
 ```
 
 ### Build
@@ -58,7 +52,7 @@ To compile/bundle this project, you can choose between this 2 command
 
 ```console
 npm run build
-npm run dev
+npm start
 ```
 
 ## Project Structure
@@ -74,22 +68,21 @@ In general, the folder structure of this project follow:
 │
 ├── src               # scripts that will be build/bundled
 │   ├── ...bunch_of_helper_scripts
-│   └── main.js   # main scripts
+│   ├── index.ts          # exported module used by Jest
+│   └── preprocessor.ts   # main scripts
 │
 ├── test
 │   ├── fixtures
 │   │   ├──────────────────────────────
 │   │   │ Bunch of sample to be tested
 │   │   ├──────────────────────────────
-│   │   └── empty.js    # just an empty file to do negative test
+│   │   └── utils.js # helper script used in various fixtures
 │   │
-│   ├── util
-│   │   ├── ...bunch_of_helper_scripts
-│   │   └── index.js
 │   │
 │   ├────────────────────────────────────────────────
-│   │ Bunch of test-cases with file-extension *.spec.js
-│   └────────────────────────────────────────────────
+│   │ Few test-cases with file-extension *.test.ts
+│   ├────────────────────────────────────────────────
+│   └── utils.ts # helper script used in various test-cases
 │
 ├─────────────────────
 │ Bunch of config files
@@ -102,7 +95,7 @@ In general, the folder structure of this project follow:
 [rollup-plugin]: https://github.com/rollup/rollup/wiki/Plugins#creating-plugins
 [rollup]: https://rollupjs.org/guide/en
 [typescript]: https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
-[eslint]: https://eslint.org/docs/user-guide/getting-started
+[tslint]: https://palantir.github.io/tslint/
 [prettier]: https://prettier.io/docs/en/install.html
 [babel]: https://babeljs.io/docs/en
 [husky]: https://github.com/typicode/husky

@@ -1,6 +1,6 @@
-# Contributing in rollup-plugin-rust
+# Contributing in rs-jest
 
-We'd always love contributions to further improve the rollup!
+We'd always love contributions to further improve the jest ecosystem!
 Here are the guidelines we'd like you to follow:
 
 - [Questions and Problems](#question)
@@ -11,7 +11,7 @@ Here are the guidelines we'd like you to follow:
 
 ### <a name="question"></a> Got a Question or Problem?
 
-Please submit support requests and questions to StackOverflow using the tag [[rollup]](http://stackoverflow.com/tags/rollup).
+Please submit support requests and questions to StackOverflow using the tag [[jest]](http://stackoverflow.com/tags/jest).
 StackOverflow is better suited for this kind of support.
 The issue tracker is for bug reports and feature discussions.
 
@@ -21,9 +21,9 @@ Before you submit an issue, please search the issue tracker, maybe an issue for 
 
 We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. In order to reproduce bugs, we ask that you to provide a minimal reproduction scenario (github repo or failing test case). Having a live, reproducible scenario gives us a wealth of important information without going back & forth to you with additional questions like:
 
-- version of rollup used
-- version of the loader / plugin you are creating a bug report for
-- the use-case that fails
+- version of jest used
+- version of the rs-jest you are using
+- the use-case that fails (if possible and not become a burden for you 😉)
 
 A minimal reproduce scenario allows us to quickly confirm a bug (or point out config problems) as well as confirm that we are fixing the right problem.
 
@@ -46,7 +46,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 - Fill out our `Pull Request Template`. Your pull request will not be considered if it is ignored.
 - Please sign the `Contributor License Agreement (CLA)` when a pull request is opened. We cannot accept your pull request without this. Make sure you sign with the primary email address associated with your local / github account.
 
-### <a name="commit"></a> rollup Contrib Commit Conventions
+### <a name="commit"></a> jest Contrib Commit Conventions
 
 Each commit message consists of a **header**, a **body** and a **footer**. The header has a special
 format that includes a **type**, a **scope** and a **subject**:
@@ -124,8 +124,8 @@ reference GitHub issues that this commit **Closes**.
 Example
 
 ```txt
-BREAKING CHANGE: Updates to `Chunk.mapModules`.
+BREAKING CHANGE: Updates to `getCacheKey()`.
 
-This release is not backwards compatible with `rollup 2.x` due to breaking changes in rollup/rollup#4764
-Migration: see rollup/rollup#5225
+This release is not backwards compatible with `jest 23.x` due to breaking changes in facebook/jest#4764
+Migration: see facebook/jest#5225
 ```
