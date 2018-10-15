@@ -1,4 +1,0 @@
-[submodule "stencil"]
-	path = examples/stencil
-	url = ../example-stencil-rust.git
-	branch = rs-jest
