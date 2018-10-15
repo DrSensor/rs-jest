@@ -10,6 +10,7 @@ module.exports = {
 	},
 	testPathIgnorePatterns: [
 		"<rootDir>/test/fixtures",
+		"<rootDir>/examples",
 		"<rootDir>/node_modules/"
 	],
 	coveragePathIgnorePatterns: [".*\\.d\\.ts", "<rootDir>/node_modules/"],
