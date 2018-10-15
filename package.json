@@ -30,7 +30,10 @@
 		"prepublishOnly": "npm run build"
 	},
 	"lint-staged": {
-		"*.ts": ["tslint -c tslint.json -p tsconfig.json"]
+		"linters": {
+			"*.ts": ["tslint -c tslint.json -p tsconfig.json"]
+		},
+		"ignore": ["examples/**"]
 	},
 	"standard-version": {
 		"scripts": {
