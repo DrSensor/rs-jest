@@ -1,6 +1,6 @@
 {
 	"name": "rs-jest",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Jest preprocessor/transformer for Rust",
 	"main": "dist/index.js",
 	"typings": "index.d.ts",
