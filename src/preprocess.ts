@@ -3,7 +3,7 @@ import { cargoCommand, findSrcDir, handleCargo } from './cargo';
 
 import { flushLogs, logOnce, execPermissive } from './utils';
 import { defaultConfig, getConfigFrom } from './options';
-import wrap from './wrapper';
+import wasm2js from 'webassembly-loader';
 
 //#region helper
 const is = (path: string) => ({ rustFile: /\.rs$/.test(path) });
@@ -70,18 +70,8 @@ export default function preprocess(
   const wasmCode = readFileSync(wasmFile);
   flushLogs();
 
-  switch (options.export) {
-    case 'buffer':
-      return wrap(wasmCode).asBuffer;
-    case 'instance':
-      return wrap(wasmCode).asWebAssembly.Instance;
-    case 'module':
-      return wrap(wasmCode).asWebAssembly.Module;
-    case 'async':
-      return wrap(wasmCode).promiseWebAssembly.Both;
-    case 'async-instance':
-      return wrap(wasmCode).promiseWebAssembly.Instance;
-    case 'async-module':
-      return wrap(wasmCode).promiseWebAssembly.Module;
-  }
+  return wasm2js(wasmCode, {
+    export: options.export,
+    module: 'cjs'
+  });
 }

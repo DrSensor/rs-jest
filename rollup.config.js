@@ -36,9 +36,9 @@ export default [
 				exclude: ["test/**"],
 				tsconfigOverride: {compilerOptions: {module: "esnext"}}
 			}),
+			babel(),
 			commonjs(),
 			resolve(),
-			babel(),
 			autoExternal(),
 			prettier(prettierrc.files("*.js"))
 		]
