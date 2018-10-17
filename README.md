@@ -8,7 +8,6 @@
 </div>
 
 [![npm][npm]][npm-url]
-[![node][node]][node-url]
 [![size][size]][size-url]
 [![npm][npm-download]][npm-url]
 [![deps][deps]][deps-url]
@@ -27,7 +26,19 @@ This is a jest transformer that loads Rust code so it can be interop with Javasc
 
 ## Requirements
 
-This module requires a minimum of Node v8.9.0, Jest v23.4.2, and Rust in [nightly channel][].
+<ul>
+<li>Node v8 or later</li>
+<li>Jest v23 or later</li>
+<li><details>
+<summary>Rust v1.28.0 with wasm32-uknown-unknown installed</summary>
+
+```console
+rustup default 1.28.0
+rustup target add wasm32-unknown-unknown
+```
+
+</details></li>
+</ul>
 
 ## Getting Started
 
@@ -94,17 +105,7 @@ Pretty much like [ts-jest][], you can configure `rs-jest` by using global variab
 <details>
 <summary><b><code>export</code></b></summary>
 
-- Type: `string`
-- Default: `promise`
-- Expected value:
-  - `buffer` will export wasm code as [Buffer][]
-  - `module` will export wasm code as [WebAssembly.Module][]
-  - `instance` will export wasm code as [WebAssembly.Instance][]
-  - `async` will [instantiate][webassembly.instantiate] wasm code asynchronously, return promise of both [WebAssembly.Module][] and [WebAssembly.Instance][]
-  - `async-module` will [compile][webassembly.compile] wasm code asynchronously, return promise of [WebAssembly.Module][]
-  - `async-instance` will [instantiate][webassembly.instantiate] wasm code asynchronously, return promise of [WebAssembly.Instance][]
-
-How wasm code would be exported. (see [examples](#examples))
+How wasm code would be exported. This options is identical with [option `export` in webassembly-loader][webassembly-loader]. (see [examples](#examples))
 
 ```json
 {
@@ -316,17 +317,10 @@ wasmCompile(importObject | undefined).then(module => {
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDrSensor%2Frs-jest.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDrSensor%2Frs-jest?ref=badge_large)
 
 [ts-jest]: https://github.com/kulshekhar/ts-jest/
-[nightly channel]: https://rustwasm.github.io/book/game-of-life/setup.html#the-wasm32-unknown-unknown-target
-[buffer]: https://nodejs.org/api/buffer.html
-[webassembly.module]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module
-[webassembly.instance]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Instance
-[webassembly.instantiate]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
-[webassembly.compile]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile
+[webassembly-loader]: https://github.com/DrSensor/webassembly-loader#export
 [npm]: https://img.shields.io/npm/v/rs-jest.svg
 [npm-url]: https://npmjs.com/package/rs-jest
 [npm-download]: https://img.shields.io/npm/dm/rs-jest.svg
-[node]: https://img.shields.io/node/v/rs-jest.svg
-[node-url]: https://nodejs.org
 [deps]: https://david-dm.org/DrSensor/rs-jest.svg
 [deps-url]: https://david-dm.org/DrSensor/rs-jest
 [tests]: https://img.shields.io/circleci/project/github/DrSensor/rs-jest.svg
