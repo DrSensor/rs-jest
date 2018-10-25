@@ -294,6 +294,11 @@ wasmCompile(importObject | undefined).then(module => {
 
 </details>
 
+## You may also want to look at
+
+- [rollup-plugin-rust](https://github.com/DrSensor/rollup-plugin-rust)
+- [webassembly-loader](https://github.com/DrSensor/webassembly-loader) + [rust-native-wasm-loader](https://github.com/dflemstr/rust-native-wasm-loader)
+
 ## Who use this?
 
 - [example-stencil-rust](https://github.com/DrSensor/example-stencil-rust)
@@ -306,8 +311,7 @@ wasmCompile(importObject | undefined).then(module => {
 
 ## Credits
 
-- [rollup-plugin-rust](https://github.com/DrSensor/rollup-plugin-rust)
-- [rust-native-wasm-loader](https://github.com/dflemstr/rust-native-wasm-loader)
+- [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter)
 - [webpack-defaults](https://github.com/webpack-contrib/webpack-defaults)
 
 ---
